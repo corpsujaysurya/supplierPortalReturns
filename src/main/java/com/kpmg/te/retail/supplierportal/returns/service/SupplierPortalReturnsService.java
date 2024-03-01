@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kpmg.te.retail.supplierportal.returns.controller.CustomerReturnsController;
 import com.kpmg.te.retail.supplierportal.returns.controller.RetailerReturnsController;
+import com.kpmg.te.retail.supplierportal.returns.entity.CustomerReturnsMaster;
 import com.kpmg.te.retail.supplierportal.returns.entity.RetailerReturnsMaster;
-import com.kpmg.te.retail.supplierportal.returns.manager.CustomerReturnsManager;
-import com.kpmg.te.retail.supplierportal.returns.manager.RetailerReturnsManager;
 
 @RestController
 @RequestMapping("/api/returns/service/")
@@ -30,11 +30,6 @@ public class SupplierPortalReturnsService {
 	@Autowired
 	CustomerReturnsController customerReturnsController;
 	
-	@Autowired
-	RetailerReturnsManager retailerReturnsManager;
-	
-	@Autowired
-	CustomerReturnsManager customerReturnsManager;
 	
 	
 	private static final Logger logger = Logger.getLogger(SupplierPortalReturnsService.class.getName());
@@ -62,37 +57,48 @@ public class SupplierPortalReturnsService {
 	/*												      	Retailer Returns - Process Return                                                                                  */
 	/**************************************************************************************************************************************************************************/
 	@RequestMapping(path = "/rr/processRetailerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String crProcessStatus(@RequestParam String returnId) throws ClassNotFoundException, SQLException {
-		return supplierPortalcrcontroller.updateProcessStatus(returnId);
+	public String processReturn(@RequestParam String returnId,@RequestParam String raiseConcernFlag,@RequestParam(required = false) String concernMsg) throws ClassNotFoundException, SQLException {
+		return retailerReturnsController.updateProcessStatus(returnId,raiseConcernFlag,concernMsg);
 	}
+	
+	@RequestMapping(path = "/rr/createRetailerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createRetailerReturn(@RequestBody RetailerReturnsMaster rrMaster) throws ClassNotFoundException, SQLException {
+		return retailerReturnsController.createRetailerReturn(rrMaster);
+	}
+	
 	
 	/************************************************************************************************************************************************************************** */
 	/*													Customer Returns -  View Returns listing & Returns Summary                                                             */
 	/**************************************************************************************************************************************************************************/
-	@RequestMapping(path = "/cr/getRetailerReturnsListing", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<CustomerReturnSummary> getAllCRListing(@RequestParam String summary_return_id) throws ClassNotFoundException, SQLException {
-		ArrayList<CustomerReturnSummary> crList = new ArrayList<CustomerReturnSummary>();
-		crList = supplierPortalcrcontroller.getCRSummaryList(summary_return_id);
+	@RequestMapping(path = "/cr/getCustomerReturnsList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<CustomerReturnsMaster> getAllCRListing() throws ClassNotFoundException, SQLException {
+		ArrayList<CustomerReturnsMaster> crList = new ArrayList<CustomerReturnsMaster>();
+		crList = customerReturnsController.getCRSummaryList();
 		logger.info("The Site List to display is: " + crList.toString());
 		return crList;
 	}
 
-	@RequestMapping(path = "/cr/getRetailerReturnsDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<CustomerReturnSummary> getAllCRListing() throws ClassNotFoundException, SQLException {
-		ArrayList<CustomerReturnSummary> crList = new ArrayList<CustomerReturnSummary>();
-		crList = supplierPortalcrcontroller.getCRListing();
-		logger.info("The Site List to display is: " + crList.toString());
-		return crList;
+	@RequestMapping(path = "/cr/getCustomerReturnDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public CustomerReturnsMaster getCRDetails(@RequestParam String returnId) throws ClassNotFoundException, SQLException {
+		CustomerReturnsMaster crDetails = customerReturnsController.getCRDetails(returnId);
+		logger.info("The Site List to display is: " + crDetails.toString());
+		return crDetails;
 	}
 	
 	
 	/************************************************************************************************************************************************************************** */
 	/*													Customer Returns -  View Returns listing & Returns Summary                                                             */
 	/**************************************************************************************************************************************************************************/
-	@RequestMapping(path = "/cr/processRetailerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String crProcessStatus(@RequestParam String returnId) throws ClassNotFoundException, SQLException {
-		return supplierPortalcrcontroller.updateProcessStatus(returnId);
+	@RequestMapping(path = "/cr/processCustomerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String crProcessStatus(@RequestParam String returnId,@RequestParam String raiseConcernFlag,@RequestParam String concernMsg) throws ClassNotFoundException, SQLException {
+		return customerReturnsController.updateProcessStatus(returnId,raiseConcernFlag,concernMsg);
 	}
+	
+	@RequestMapping(path = "/cr/createCustomerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createCustomerReturn(@RequestBody CustomerReturnsMaster crMaster) throws ClassNotFoundException, SQLException {
+		return customerReturnsController.createCustomerReturn(crMaster);
+	}
+	
 	
 
 

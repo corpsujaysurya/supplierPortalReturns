@@ -8,6 +8,7 @@ public class ReturnConstants {
 
 		public static final String mySQL_ID = "root";
 		public static final String mySQL_pass = "sujay";
+		public static final String SCHEMA_NAME = "SUPPLIER_PORTAL";
 
 		public static final String all_scale_param_query = "SELECT param_name FROM generic_master_params";
 		public static final String dist_scale_param_query = "SELECT param_name FROM generic_master_params where param_scale = 'dist'";

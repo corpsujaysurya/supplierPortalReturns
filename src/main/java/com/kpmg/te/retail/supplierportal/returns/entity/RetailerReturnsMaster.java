@@ -12,9 +12,9 @@ public class RetailerReturnsMaster {
 	private String poList;
 	private String asnList;
 
-	private Integer totalUniqRetItems;
-	private Integer totalReturnItems;
-	private Integer totalCostReturns;
+	private String totalUniqRetItems;
+	private String totalReturnItems;
+	private String totalCostReturns;
 
 	private String returnSite;
 	private String truckNo;
@@ -23,6 +23,7 @@ public class RetailerReturnsMaster {
 	private String logisticsPartner;
 
 	private String itemDetails;
+	private String concernMsg;
 
 	public String getReturnId() {
 		return returnId;
@@ -88,27 +89,27 @@ public class RetailerReturnsMaster {
 		this.asnList = asnList;
 	}
 
-	public Integer getTotalUniqRetItems() {
+	public String getTotalUniqRetItems() {
 		return totalUniqRetItems;
 	}
 
-	public void setTotalUniqRetItems(Integer totalUniqRetItems) {
+	public void setTotalUniqRetItems(String totalUniqRetItems) {
 		this.totalUniqRetItems = totalUniqRetItems;
 	}
 
-	public Integer getTotalReturnItems() {
+	public String getTotalReturnItems() {
 		return totalReturnItems;
 	}
 
-	public void setTotalReturnItems(Integer totalReturnItems) {
+	public void setTotalReturnItems(String totalReturnItems) {
 		this.totalReturnItems = totalReturnItems;
 	}
 
-	public Integer getTotalCostReturns() {
+	public String getTotalCostReturns() {
 		return totalCostReturns;
 	}
 
-	public void setTotalCostReturns(Integer totalCostReturns) {
+	public void setTotalCostReturns(String totalCostReturns) {
 		this.totalCostReturns = totalCostReturns;
 	}
 
@@ -159,6 +160,14 @@ public class RetailerReturnsMaster {
 	public void setItemDetails(String itemDetails) {
 		this.itemDetails = itemDetails;
 	}
+	
+	public String getConcernMsg() {
+		return concernMsg;
+	}
+
+	public void setConcernMsg(String concernMsg) {
+		this.concernMsg = concernMsg;
+	}
 
 	@Override
 	public String toString() {
@@ -168,7 +177,7 @@ public class RetailerReturnsMaster {
 				+ ", totalUniqRetItems=" + totalUniqRetItems + ", totalReturnItems=" + totalReturnItems
 				+ ", totalCostReturns=" + totalCostReturns + ", returnSite=" + returnSite + ", truckNo=" + truckNo
 				+ ", driverName=" + driverName + ", driverDLNo=" + driverDLNo + ", logisticsPartner=" + logisticsPartner
-				+ ", itemDetails=" + itemDetails + "]";
+				+ ", itemDetails=" + itemDetails + ", concernMsg=" + concernMsg + "]";
 	}
 
 }
