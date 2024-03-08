@@ -85,18 +85,18 @@ public class RetailerReturnsDao {
 		return retailerRetMasterObj;
 	}
 
-	public String UpdateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg) throws ClassNotFoundException, SQLException {
+	public String UpdateProcessStatus(String itemDetails, String returnId,String concernRaisedFlag) throws ClassNotFoundException, SQLException {
 		Connection conn = getConnectioDetails();
 		String updateStatus = "Invalid";
 		try {
 			conn = getConnectioDetails();
-				String query = "UPDATE SUPPLIER_PORTAL.RETAILER_RETURNS_MASTER SET PROCESSED_STATUS_FLAG = ? , CONCERN_RAISED_FLAG = ?, CONCERN_MSG = ? WHERE RETURN_ID = ?  ";
+				String query = "UPDATE SUPPLIER_PORTAL.RETAILER_RETURNS_MASTER SET PROCESSED_STATUS_FLAG = ? , CONCERN_RAISED_FLAG = ?, ITEM_DETAILS = ? WHERE RETURN_ID = ?  ";
 				logger.info(query);
 				PreparedStatement pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, "Y");
-				pstmt.setString(2, raiseConcernFlag);
-				pstmt.setNString(3, concernMsg);
-				pstmt.setString(4, returnId);
+				pstmt.setString(1,"Y");
+				pstmt.setString(2,concernRaisedFlag);
+				pstmt.setString(3,itemDetails);
+				pstmt.setString(4,returnId);
 				int updateStatusCode = pstmt.executeUpdate();
 				logger.info(Integer.toString(updateStatusCode));
 				updateStatus = (updateStatusCode == 1) ? ("SUCCESS") : ("FAILURE");
@@ -115,7 +115,7 @@ public class RetailerReturnsDao {
 		try {
 			conn = getConnectioDetails();
 			PreparedStatement pstmt = conn.prepareStatement(
-					"INSERT INTO "+ ReturnConstants.SCHEMA_NAME +".RETAILER_RETURNS_MASTER (RETURN_ID,RETURN_DATE,PROCESSED_STATUS_FLAG,CONCERN_RAISED_FLAG,PO_LIST,ASN_LIST,ORDERED_DATE,RETURN_STATUS,TOTAL_ITEM_QUANTIY,TOTAL_UNIQUE_ITEMS,TOTAL_COST,RETURN_SITE,TRUCK_NO,DRIVER_NAME,DRIVER_DL_NO,LOGISTICS_PARTNER,ITEM_DETAILS,CONCERN_MSG)"
+					"INSERT INTO "+ ReturnConstants.SCHEMA_NAME +".RETAILER_RETURNS_MASTER (RETURN_ID,RETURN_DATE,PROCESSED_STATUS_FLAG,CONCERN_RAISED_FLAG,PO_LIST,ASN_LIST,ORDERED_DATE,RETURN_STATUS,TOTAL_ITEM_QUANTIY,TOTAL_UNIQUE_ITEMS,TOTAL_COST,RETURN_SITE,TRUCK_NO,DRIVER_NAME,DRIVER_DL_NO,LOGISTICS_PARTNER,ITEM_DETAILS,CUSTOMER_COMMENT)"
 							+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, rrMaster.getReturnId());
 			pstmt.setString(2, rrMaster.getReturnDate());

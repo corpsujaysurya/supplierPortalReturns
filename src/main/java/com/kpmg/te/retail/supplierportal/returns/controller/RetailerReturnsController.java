@@ -25,9 +25,8 @@ public class RetailerReturnsController {
 		return rrDao.getRRSummaryDetails(retailerReturnID);
 	}
 
-	public String updateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg)
-			throws ClassNotFoundException, SQLException {
-		return rrDao.UpdateProcessStatus(returnId, raiseConcernFlag, concernMsg);
+	public String updateProcessStatus(String itemDetails,String returnId, String concernRaisedFlag) throws ClassNotFoundException, SQLException {
+		return rrDao.UpdateProcessStatus(itemDetails,returnId,concernRaisedFlag);
 	}
 
 	public String createRetailerReturn(RetailerReturnsMaster rrMaster) throws SQLException {

@@ -57,8 +57,8 @@ public class SupplierPortalReturnsService {
 	/*												      	Retailer Returns - Process Return                                                                                  */
 	/**************************************************************************************************************************************************************************/
 	@RequestMapping(path = "/rr/processRetailerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String processReturn(@RequestParam String returnId,@RequestParam String raiseConcernFlag,@RequestParam(required = false) String concernMsg) throws ClassNotFoundException, SQLException {
-		return retailerReturnsController.updateProcessStatus(returnId,raiseConcernFlag,concernMsg);
+	public String processReturn(@RequestParam String itemDetails,@RequestParam String returnId,@RequestParam String raiseConcernFlag) throws ClassNotFoundException, SQLException {
+		return retailerReturnsController.updateProcessStatus(itemDetails,returnId,raiseConcernFlag);
 	}
 	
 	@RequestMapping(path = "/rr/createRetailerReturns", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
