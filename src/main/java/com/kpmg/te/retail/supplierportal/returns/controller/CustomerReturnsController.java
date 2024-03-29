@@ -23,8 +23,8 @@ public class CustomerReturnsController {
 		 return crDao.getcustReturnsDetails(returnId);
 	}
 
-	public String updateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg) throws ClassNotFoundException, SQLException {
-		return crDao.UpdateProcessStatus(returnId,raiseConcernFlag,concernMsg);
+	public String updateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg,String itemDetails) throws ClassNotFoundException, SQLException {
+		return crDao.UpdateProcessStatus(returnId,raiseConcernFlag,concernMsg,itemDetails);
 	}
 
 	public String createCustomerReturn(CustomerReturnsMaster crMaster) throws SQLException {

@@ -86,18 +86,19 @@ private static final Logger logger = Logger.getLogger(CustomerReturnsDao.class.g
 		return custRetMasterObj;
 	}
 
-	public String UpdateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg) throws SQLException, ClassNotFoundException {
+	public String UpdateProcessStatus(String returnId, String raiseConcernFlag, String concernMsg,String itemDetails) throws SQLException, ClassNotFoundException {
 		Connection conn = getConnectioDetails();
 		String updateStatus = "Invalid";
 		try {
 			conn = getConnectioDetails();
-				String query = "UPDATE SUPPLIER_PORTAL.CUSTOMER_RETURNS_MASTER SET PROCESSED_STATUS_FLAG = ? , CONCERN_RAISED_FLAG = ?, CONCERN_MSG = ? WHERE RETURN_ID = ?  ";
+				String query = "UPDATE SUPPLIER_PORTAL.CUSTOMER_RETURNS_MASTER SET PROCESSED_STATUS_FLAG = ? , CONCERN_RAISED_FLAG = ?, CONCERN_MSG = ?,ITEM_DETAILS = ? WHERE RETURN_ID = ?  ";
 				logger.info(query);
 				PreparedStatement pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "Y");
 				pstmt.setString(2, raiseConcernFlag);
 				pstmt.setString(3, concernMsg);
-				pstmt.setString(4, returnId);
+				pstmt.setString(4, itemDetails);
+				pstmt.setString(5, returnId);
 				int updateStatusCode = pstmt.executeUpdate();
 				logger.info(Integer.toString(updateStatusCode));
 				updateStatus = (updateStatusCode == 1) ? ("SUCCESS") : ("FAILURE");
